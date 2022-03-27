@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: not-important-StatefulSet
+annotations:
+  configmanagement.gke.io/cluster-selector: dc-singapore-on-prem
+fieldSpecs:
+- kind: StatefulSet
+  path: metadata/annotations
+  create: true

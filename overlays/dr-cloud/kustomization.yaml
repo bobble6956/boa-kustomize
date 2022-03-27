@@ -1,9 +1,6 @@
 resources:
 - ../../base
-- accounts-db.yaml
-- ledger-db.yaml
 namespace: boa
 transformers:
 - ./kustomizeconfig/suffix.yaml
-- ./kustomizeconfig/statefulset_annotation.yaml
 - ./kustomizeconfig/deployment_annotation.yaml

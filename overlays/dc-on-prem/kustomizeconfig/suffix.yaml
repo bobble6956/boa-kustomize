@@ -1,0 +1,8 @@
+apiVersion: builtin
+kind: PrefixSuffixTransformer
+metadata:
+  name: not-important-Deployment
+suffix: "-dc-onprem"
+fieldSpecs:
+- kind: Deployment
+  path: metadata/name

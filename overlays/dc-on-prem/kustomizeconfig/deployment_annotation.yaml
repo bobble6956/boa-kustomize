@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: not-important-Deployment
+annotations:
+  configmanagement.gke.io/cluster-selector: dc-singapore-on-prem
+fieldSpecs:
+- kind: Deployment
+  path: metadata/annotations
+  create: true
