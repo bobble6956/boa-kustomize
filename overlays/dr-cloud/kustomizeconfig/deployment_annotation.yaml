@@ -3,7 +3,7 @@ kind: AnnotationsTransformer
 metadata:
   name: not-important-Deployment
 annotations:
-  configmanagement.gke.io/cluster-selector: dr-usa-cloud
+  configmanagement.gke.io/cluster-selector: anthos-on-eks
 fieldSpecs:
 - kind: Deployment
   path: metadata/annotations
