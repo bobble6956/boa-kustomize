@@ -1,0 +1,53 @@
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: gcr.io/bank-of-anthos-ci/userservice:v0.5.6
+
+- op: add
+  path: /spec/template/spec/volumes
+  value:
+    - name: publickey
+      secret:
+        secretName: jwt-key
+        items:
+          - key: jwtRS256.key.pub
+            path: publickey
+    - emptyDir: {}
+      name: tmp
+
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts
+  value:
+    - name: publickey
+      mountPath: "/tmp/.ssh"
+      readOnly: true
+    - mountPath: /tmp
+      name: tmp
+
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+    - name: VERSION
+      value: "v0.5.6"
+    - name: PORT
+      value: "8080"
+    - name: ENABLE_TRACING
+      value: "true"
+    - name: TOKEN_EXPIRY_SECONDS
+      value: "3600"
+    - name: PRIV_KEY_PATH
+      value: "/tmp/.ssh/privatekey"
+    # Valid levels are debug, info, warning, error, critical. If no valid level is set, gunicorn will default to info.
+    - name: LOG_LEVEL
+      value: "info"
+    - name: POSTGRES_DB
+      value: accounts-db
+    - name: POSTGRES_USER
+      value: accounts-admin
+    - name: POSTGRES_PASSWORD
+      value: accounts-pwd
+    - name: ACCOUNTS_DB_URI
+      value: postgresql://accounts-admin:accounts-pwd@accounts-db:5432/accounts-db
+    - name: LOCAL_ROUTING_NUM
+      value: "883745000"
+    - name: PUB_KEY_PATH
+      value: "/tmp/.ssh/publickey"

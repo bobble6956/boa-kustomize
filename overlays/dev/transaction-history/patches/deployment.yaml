@@ -1,0 +1,73 @@
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: gcr.io/bank-of-anthos-ci/transactionhistory:v0.5.6
+
+- op: add
+  path: /spec/template/spec/volumes
+  value:
+    - name: publickey
+      secret:
+        secretName: jwt-key
+        items:
+          - key: jwtRS256.key.pub
+            path: publickey
+    - emptyDir: {}
+      name: tmp
+
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts
+  value:
+    - name: publickey
+      mountPath: "/tmp/.ssh"
+      readOnly: true
+    - mountPath: /tmp
+      name: tmp
+
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+    - name: VERSION
+      value: "v0.5.6"
+    - name: PORT
+      value: "8080"
+    - name: ENABLE_TRACING
+      value: "true"
+    - name: ENABLE_METRICS
+      value: "true"
+    - name: POLL_MS
+      value: "100"
+    - name: CACHE_SIZE
+      value: "1000"
+    - name: CACHE_MINUTES
+      value: "60"
+    - name: HISTORY_LIMIT
+      value: "100"
+      # tell Java to obey container memory limits
+    - name: JVM_OPTS
+      value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256m -Xmx512m"
+    #- name: EXTRA_LATENCY_MILLIS
+    #  value: "5000"
+    # Valid levels are debug, info, warn, error, fatal.
+    # If no valid level is set, will default to info.
+    - name: LOG_LEVEL
+      value: "info"
+    - name: NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: POSTGRES_DB
+      value: postgresdb
+    - name: POSTGRES_USER
+      value: admin
+    - name: POSTGRES_PASSWORD
+      value: password
+    - name: SPRING_DATASOURCE_URL
+      value: jdbc:postgresql://ledger-db:5432/postgresdb
+    - name: SPRING_DATASOURCE_USERNAME
+      value: admin # should match POSTGRES_USER
+    - name: SPRING_DATASOURCE_PASSWORD
+      value: password # should match POSTGRES_PASSWORD
+    - name: LOCAL_ROUTING_NUM
+      value: "883745000"
+    - name: PUB_KEY_PATH
+      value: "/tmp/.ssh/publickey"

@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../../base/general-objects
+
+commonLabels:
+  app: frontend
+
+replicas:
+- name: __appname__
+  count: 5
+
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: __appname__
+  path: patches/deployment.yaml
+
+patches:
+- target:
+    kind: Deployment|Service
+    name: .*
+  patch: |-
+    - op: replace
+      path: /metadata/name
+      value: frontend
+
+components:
+- ../../../components/cluster-patches/DC
+- ../../../components/cluster-patches/DR
+- ../../../components/common-env-patches/dev

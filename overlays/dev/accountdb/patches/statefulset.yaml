@@ -1,0 +1,25 @@
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+  - name: LOCAL_ROUTING_NUM
+    value: "883745000"
+  - name: PUB_KEY_PATH
+    value: "/tmp/.ssh/publickey"
+  - name: USE_DEMO_DATA
+    value: "True"
+  - name: DEMO_LOGIN_USERNAME
+    value: "testuser"
+  - name: DEMO_LOGIN_PASSWORD
+    value: "bankofanthos"
+  - name: POSTGRES_DB
+    value: accounts-db
+  - name: POSTGRES_USER
+    value: accounts-admin
+  - name: POSTGRES_PASSWORD
+    value: accounts-pwd
+  - name: ACCOUNTS_DB_URI
+    value: postgresql://accounts-admin:accounts-pwd@accounts-db:5432/accounts-db
+
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: gcr.io/bank-of-anthos-ci/accounts-db:v0.5.6

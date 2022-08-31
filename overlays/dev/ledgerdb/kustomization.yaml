@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../../base/general-objects
+
+commonLabels:
+  app: ledgerdb
+
+replicas:
+- name: __appname__
+  count: 1
+
+patchesJson6902:
+- target:
+    group: apps
+    version: v1
+    kind: Statefulset
+    name: db
+  path: patches/statefulset.yaml
+
+patches:
+- target:
+    kind: Statefulset|Service
+    name: .*
+  patch: |-
+    - op: replace
+      path: /metadata/name
+      value: ledgerdb
+
+components:
+- ../../../components/cluster-patches/DC
+- ../../../components/common-env-patches/dev

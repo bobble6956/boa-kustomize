@@ -1,6 +1,0 @@
-- op: replace
-  path: /spec/template/spec/containers/0/env/2/value
-  value: "false"
-- op: replace
-  path: /spec/template/spec/containers/0/env/3/value
-  value: "false"
