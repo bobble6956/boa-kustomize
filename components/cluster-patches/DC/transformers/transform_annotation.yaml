@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: not-important-Deployment
+annotations:
+  configmanagement.gke.io/cluster-selector: anthos-on-gcp
+fieldSpecs:
+- kind: StatefulSet
+  path: metadata/annotations
+  create: true

@@ -1,0 +1,29 @@
+- op: add
+  path: /spec/template/spec/containers/0/env
+  value:
+  - name: LOCAL_ROUTING_NUM
+    value: "883745000"
+  - name: PUB_KEY_PATH
+    value: "/tmp/.ssh/publickey"
+  - name: USE_DEMO_DATA
+    value: "True"
+  - name: DEMO_LOGIN_USERNAME
+    value: "testuser"
+  - name: DEMO_LOGIN_PASSWORD
+    value: "bankofanthos"
+  - name: POSTGRES_DB
+    value: postgresdb
+  - name: POSTGRES_USER
+    value: admin
+  - name: POSTGRES_PASSWORD
+    value: password
+  - name: SPRING_DATASOURCE_URL
+    value: jdbc:postgresql://ledger-db:5432/postgresdb
+  - name: SPRING_DATASOURCE_USERNAME
+    value: admin # should match POSTGRES_USER
+  - name: SPRING_DATASOURCE_PASSWORD
+    value: password # should match POSTGRES_PASSWORD
+
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: gcr.io/bank-of-anthos-ci/ledger-db:v0.5.6

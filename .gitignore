@@ -1,3 +1,6 @@
 complied/
 overlays/dc-on-prem/complied/
 overlays/dr-cloud/complied/
+.DS_Store
+*.DS_Store
+*/*.DS_Store
